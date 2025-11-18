@@ -36,7 +36,7 @@ class AuthGate extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        // Loading Firebase
+        // Still initializing Firebase / auth
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const SplashScreen();
         }
@@ -46,7 +46,7 @@ class AuthGate extends StatelessWidget {
           return const AuthPage();
         }
 
-        // User logged in → show home
+        // User is logged in → go to message boards
         return const MessageBoardsPage();
       },
     );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'chat_page.dart';
+
 class MessageBoardsPage extends StatelessWidget {
   const MessageBoardsPage({super.key});
 
@@ -8,12 +10,12 @@ class MessageBoardsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
 
-    // Hard-coded message boards for now
+    // Each board has an id (used in Firestore) and a title
     final boards = [
-      {'title': 'General', 'icon': Icons.forum},
-      {'title': 'Homework Help', 'icon': Icons.school},
-      {'title': 'Announcements', 'icon': Icons.campaign},
-      {'title': 'Random', 'icon': Icons.tag},
+      {'id': 'general', 'title': 'General', 'icon': Icons.forum},
+      {'id': 'homework', 'title': 'Homework Help', 'icon': Icons.school},
+      {'id': 'announcements', 'title': 'Announcements', 'icon': Icons.campaign},
+      {'id': 'random', 'title': 'Random', 'icon': Icons.tag},
     ];
 
     return Scaffold(
@@ -41,7 +43,7 @@ class MessageBoardsPage extends StatelessWidget {
               leading: const Icon(Icons.person),
               title: const Text('Profile'),
               onTap: () {
-                // TODO: navigate to Profile page
+                // TODO: implement Profile page later
                 Navigator.pop(context);
               },
             ),
@@ -49,7 +51,7 @@ class MessageBoardsPage extends StatelessWidget {
               leading: const Icon(Icons.settings),
               title: const Text('Settings'),
               onTap: () {
-                // TODO: navigate to Settings page
+                // TODO: implement Settings page later
                 Navigator.pop(context);
               },
             ),
@@ -60,7 +62,6 @@ class MessageBoardsPage extends StatelessWidget {
               onTap: () async {
                 Navigator.pop(context);
                 await FirebaseAuth.instance.signOut();
-                // AuthGate in main.dart will send user back to AuthPage
               },
             ),
           ],
@@ -74,11 +75,12 @@ class MessageBoardsPage extends StatelessWidget {
             leading: Icon(board['icon'] as IconData),
             title: Text(board['title'] as String),
             onTap: () {
-              // TODO: later this will open a ChatPage for that board
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    'Tapped board: ${board['title']} (chat coming later)',
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => ChatPage(
+                    boardId: board['id'] as String,
+                    boardTitle: board['title'] as String,
                   ),
                 ),
               );
