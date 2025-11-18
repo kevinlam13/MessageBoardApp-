@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'chat_page.dart';
+import 'profile_page.dart';
+import 'settings_page.dart';
 
 class MessageBoardsPage extends StatelessWidget {
   const MessageBoardsPage({super.key});
@@ -43,16 +45,26 @@ class MessageBoardsPage extends StatelessWidget {
               leading: const Icon(Icons.person),
               title: const Text('Profile'),
               onTap: () {
-                // TODO: implement Profile page later
                 Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const ProfilePage(),
+                  ),
+                );
               },
             ),
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text('Settings'),
               onTap: () {
-                // TODO: implement Settings page later
                 Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const SettingsPage(),
+                  ),
+                );
               },
             ),
             const Divider(),
