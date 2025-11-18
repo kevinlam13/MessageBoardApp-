@@ -47,7 +47,7 @@ class AuthGate extends StatelessWidget {
         }
 
         // User is logged in → go to message boards
-        return const MessageBoardsPage();
+        return MessageBoardsPage();
       },
     );
   }
